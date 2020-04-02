@@ -1,7 +1,6 @@
 # CPP-Lisp
 
-A lisp interpreter made to learn more about lisp and refresh on C++.
-I primarily followed Make a Lisp (MAL).
+Following Make a Lisp (MAL) to code up a simple lisp interpreter. I wanted to learn more about lisp and refresh on C++.
 
 
 
