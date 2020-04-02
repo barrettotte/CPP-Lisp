@@ -2,9 +2,8 @@
 #define LISP_REPL_H
 
 #include <iostream>
-#include <string>
 
-using namespace std;
+using std::string;
 
 namespace lisp{
 
@@ -15,6 +14,7 @@ namespace lisp{
             string eval(const string &s);
             string print(const string &s);
             string rep(const string &s);
+
     };
 
 }

@@ -9,8 +9,8 @@ TARGET = lisp
 default:	$(TARGET)
 all:		default
 
-OBJECTS = $(patsubst %.cpp, %.o, $(wildcard *.cpp))
-HEADERS = $(wildcard *.hpp)
+OBJECTS = $(patsubst %.cpp, %.o, $(wildcard *.cpp) $(wildcard */*.cpp))
+HEADERS = $(wildcard *.hpp) $(wildcard */*.hpp)
 
 %.o: %.cpp $(HEADERS)
 	$(CC) $(CCFLAGS) -c $< -o $@

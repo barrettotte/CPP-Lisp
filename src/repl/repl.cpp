@@ -1,6 +1,6 @@
 #include "repl.hpp"
 
-using namespace std;
+using std::string;
 
 namespace lisp{
     
