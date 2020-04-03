@@ -7,20 +7,11 @@
 using std::string;
 using std::vector;
 
+
 namespace lisp{
 
-    class Reader{
-
-        public:
-            Reader read_str();
-            string next();
-            string peek();
-
-        private:
-            vector<string> tokenize(string s);
-
-    };
-
+    string read_str(const string &s);
+    
 }
 
 #endif

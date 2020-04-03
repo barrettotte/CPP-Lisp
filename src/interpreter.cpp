@@ -2,10 +2,11 @@
 #include "repl/repl.hpp"
 
 using namespace std;
+using lisp::Repl;
 
 
 int main(){
-    lisp::Repl *repl = new lisp::Repl();
+    Repl *repl = new Repl();
     string line = "";
 
     cout << "========== CPP-Lisp ==========\n";

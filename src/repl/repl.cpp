@@ -1,11 +1,12 @@
 #include "repl.hpp"
+#include "reader.hpp"
 
 using std::string;
 
 namespace lisp{
     
     string Repl::read(const string &s){
-        return s;
+        return read_str(s);
     }
 
     string Repl::eval(const string &s){

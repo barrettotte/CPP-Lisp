@@ -3,14 +3,15 @@ CCFLAGS = -g -Wall
 LIBS = 
 
 TARGET = lisp
+SRCDIR = src
 
 .PHONY: default all clean
 
 default:	$(TARGET)
 all:		default
 
-OBJECTS = $(patsubst %.cpp, %.o, $(wildcard *.cpp) $(wildcard */*.cpp))
-HEADERS = $(wildcard *.hpp) $(wildcard */*.hpp)
+OBJECTS = $(patsubst $(SRCDIR)/%.cpp, $(SRCDIR)/%.o, $(wildcard $(SRCDIR)/*.cpp) $(wildcard $(SRCDIR)/*/*.cpp))
+HEADERS = $(wildcard $(SRCDIR)/*.hpp) $(wildcard $(SRCDIR)/*/*.hpp)
 
 %.o: %.cpp $(HEADERS)
 	$(CC) $(CCFLAGS) -c $< -o $@
