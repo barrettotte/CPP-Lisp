@@ -1,5 +1,5 @@
 #include <iostream>
-#include "repl/repl.hpp"
+#include "lisp.hpp"
 
 using namespace std;
 using lisp::Repl;

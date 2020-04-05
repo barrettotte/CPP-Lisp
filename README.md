@@ -1,6 +1,7 @@
 # CPP-Lisp
 
-Following Make a Lisp (MAL) to code up a simple lisp interpreter. I wanted to learn more about lisp and refresh on C++.
+[Following Make a Lisp (MAL)](https://github.com/kanaka/mal) to code up a simple lisp interpreter. 
+I wanted to learn more about lisp and refresh on C++.
 
 
 
@@ -9,4 +10,4 @@ Following Make a Lisp (MAL) to code up a simple lisp interpreter. I wanted to le
 
 
 ## References
-* Make a Lisp - https://github.com/kanaka/mal/blob/master/process/guide.md
+* Make a Lisp - https://github.com/kanaka/mal
