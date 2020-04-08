@@ -21,7 +21,12 @@ namespace lisp{
     
     string print_str(LispType t);
     LispType read_str(const string &s);
-    
+
+
+    /* utils.cpp */
+    void assert_withMsg(const bool cond, const string msg);
+    void assert_parse(const char actual, const char expected);
+
 }
 
 #endif
