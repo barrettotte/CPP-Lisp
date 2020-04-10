@@ -17,7 +17,7 @@ namespace lisp{
 
     class LispList : public LispType{
         public:
-            // TODO: constructor
+            LispList();
             LispType at(const size_t i);
             void push_back(LispType x);
             string print() override;
@@ -32,6 +32,14 @@ namespace lisp{
             string print() override;
         private:
             LispType value;
+    };
+
+    class LispKeyword : public LispType{
+        public:
+            LispKeyword(const string v);
+            string print() override;
+        private:
+            string value;
     };
 
     class LispNumber : public LispType{

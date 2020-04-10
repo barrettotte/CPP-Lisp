@@ -42,6 +42,7 @@ namespace lisp{
 
 
     /****************** function prototypes *****************/
+    
     static LispType read_form(Reader &reader);
     static LispType read_list(Reader &reader, LispList list, const char start, const char end);
     static LispType read_atom(Reader &reader);
@@ -93,7 +94,9 @@ namespace lisp{
         regex intRegex("^[-+]?\\d+$");
         string token = reader.fetch();
 
-        if(regex_match(token, intRegex)){
+        if(token.at(0) == ':'){
+            return LispKeyword(token);
+        } else if(regex_match(token, intRegex)){
             return LispNumber(stoi(token));
         }
         return LispSymbol(token);

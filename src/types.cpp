@@ -44,6 +44,16 @@ namespace lisp{
     }
 
 
+    /******************** LispKeyword *******************/
+    LispKeyword::LispKeyword(const string v){
+        this->value = v;
+    }
+
+    string LispKeyword::print(){
+        return "keyword " + this->value;
+    }
+
+
     /********************* LispNumber *******************/
     LispNumber::LispNumber(const int v){
         this->value = v;
