@@ -1,76 +1,52 @@
-#include <assert.h>
-#include <iostream>
-#include "lisp.hpp"
+#include "types.hpp"
 
-using namespace std;
 
 namespace lisp{
 
-    string LispType::print(){ 
-        return ""; 
+    Number::Number(const string token){
+        this->value = token;
     }
 
-    /********************* LispList *********************/
-    LispType LispList::at(const size_t i){
-        assert((i >= 0 && i < this->value.size())
-            && "Index out of bounds");
-        return this->value.at(i);
+    Symbol::Symbol(const string token){
+        this->value = token;
     }
 
-    void LispList::push_back(LispType x){
-        this->value.push_back(x);
-    }
+    string Exp::toString(const size_t lvl){
+        string s = "";
 
-    string LispList::print(){
-        string s = "\n(";
-        for(size_t i = 0; i < this->value.size()-1; i++){
-            s += (this->value.at(i).print() + " ");
+        if(this->value.length() > 0){
+            s += "'" + this->value + "'\n";
         }
-        return s + "\n)";
+        if(this->children.size() > 0){
+            s += "items [\n";
+
+            for(size_t i = 0; i < this->children.size(); i++){
+                for(size_t j = 0; j <= lvl; j++){
+                    s += "  ";
+                }
+                s += (this->children.at(i).toString(lvl+1));
+            }
+            for(size_t x = 0; x < lvl; x++){
+                s += "  ";
+            }
+            s += "]\n";
+        }
+        return s;
     }
 
-    LispList::~LispList(){
-        this->value.clear();
+    Exp::~Exp(){
+        this->children.clear();
     }
 
-
-    /********************* LispAtom *********************/
-    LispAtom::LispAtom(LispType v){
-        this->value = v;
+    void List::add(const Exp child){
+        this->children.push_back(child);
     }
 
-    string LispAtom::print(){
-        return "atom " + this->value.print();
-    }
-
-
-    /******************** LispKeyword *******************/
-    LispKeyword::LispKeyword(const string v){
-        this->value = v;
-    }
-
-    string LispKeyword::print(){
-        return "keyword " + this->value;
-    }
-
-
-    /********************* LispNumber *******************/
-    LispNumber::LispNumber(const int v){
-        this->value = v;
-    }
-
-    string LispNumber::print(){
-        return to_string(this->value);
-    }
-
-
-    /******************** LispSymbol ********************/
-    LispSymbol::LispSymbol(const string v){
-        this->value = v;
-    }
-    
-    string LispSymbol::print(){
-        return this->value;
+    Exp List::get(const size_t i){
+        if(i > this->children.size()){
+            std::cerr << "Index out of bounds.\n";
+        }
+        return this->children.at(i);
     }
 
 }

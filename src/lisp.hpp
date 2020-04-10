@@ -2,30 +2,30 @@
 #define LISP_H
 
 #include <iostream>
+#include <list>
+#include <string>
 #include <vector>
 #include "types.hpp"
 
+using std::list;
 using std::string;
 using std::vector;
 
 namespace lisp{
 
-    class Repl{
+    class Parser{
         public:
-            LispType read(const string &s);
-            LispType eval(LispType t);
-            string print(LispType t);
-            string rep(const string &s);
+            Exp parse(const string &pgm);
+        private:
+            vector<string> tokens;
+            vector<string> tokenize(const string &s);
+            Exp readTokens(vector<string> &tokens);
+            Atom makeAtom(const string token);
     };
-
-    
-    string print_str(LispType t);
-    LispType read_str(const string &s);
 
 
     /* utils.cpp */
-    void assert_withMsg(const bool cond, const string msg);
-    void assert_parse(const char actual, const char expected);
+    bool isNumber(const string s);
 
 }
 

@@ -9,59 +9,45 @@ using std::vector;
 
 namespace lisp{
 
-    class LispType{
+    class Exp{
         public:
-            virtual string print();
-        private:
-    };
-
-    class LispList : public LispType{
-        public:
-            LispList();
-            LispType at(const size_t i);
-            void push_back(LispType x);
-            string print() override;
-            ~LispList();
-        private:
-            vector<LispType> value;
-    };
-
-    class LispAtom : public LispType{
-        public:
-            LispAtom(LispType v);
-            string print() override;
-        private:
-            LispType value;
-    };
-
-    class LispKeyword : public LispType{
-        public:
-            LispKeyword(const string v);
-            string print() override;
-        private:
+            string toString(const size_t lvl);
+            ~Exp();
+        protected:
             string value;
+            vector<Exp> children;
     };
 
-    class LispNumber : public LispType{
+    class Atom: public Exp{
         public:
-            LispNumber(const int v);
-            string print() override;
         private:
-            int value;
     };
 
-    class LispSymbol : public LispType{
+    class List: public Exp{
         public:
-            LispSymbol(const string s);
-            string print() override;
+            void add(Exp child);
+            Exp get(const size_t i);
         private:
-            string value;
     };
-    
-    // TODO: string
-    // TODO: nil
-    // TODO: true / false
-    // TODO: keyword
+
+    class Symbol: public Atom{
+        public:
+            Symbol(const string token);
+        private:
+    };
+
+    class Number: public Atom{
+        public:
+            Number(const string token);
+        private:
+    };
+
+    class Env{
+        public:
+            Env();
+        private:
+    };
+
 }
 
 #endif

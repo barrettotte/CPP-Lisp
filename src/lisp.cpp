@@ -2,21 +2,23 @@
 #include "lisp.hpp"
 
 using namespace std;
-using lisp::Repl;
+using lisp::Parser;
 
 
 int main(){
-    Repl *repl = new Repl();
     string line = "";
 
     cout << "========== CPP-Lisp ==========\n";
-    cout << "       (CTRL+D to exit)\n> ";
+    //cout << "       (CTRL+D to exit)\n> ";
 
-    while(getline(cin, line)){
-        repl->rep(line);
-        cout << line << "\n> ";
-    }
+    Parser parser = Parser();
+    string pgm = "(begin (define r 10) (* pi (* r r)))";
+    
+    lisp::Exp exp = parser.parse(pgm);
+    cout << exp.toString(0) << endl;
+
     cout << endl;
-
     return 0;
 }
+
+
