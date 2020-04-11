@@ -44,7 +44,6 @@ namespace lisp{
 
     class Env{
         public:
-            Env();
         private:
     };
 

@@ -18,8 +18,7 @@ namespace lisp{
             s += "'" + this->value + "'\n";
         }
         if(this->children.size() > 0){
-            s += "items [\n";
-
+            s += "[\n";
             for(size_t i = 0; i < this->children.size(); i++){
                 for(size_t j = 0; j <= lvl; j++){
                     s += "  ";

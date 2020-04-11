@@ -18,9 +18,22 @@ namespace lisp{
             Exp parse(const string &pgm);
         private:
             vector<string> tokens;
+
             vector<string> tokenize(const string &s);
             Exp readTokens(vector<string> &tokens);
             Atom makeAtom(const string token);
+    };
+
+    class Repl{
+        public:
+            Repl();
+            Exp read(const string &s);
+            Exp eval(Exp exp);
+            string print(Exp exp);
+            string rep(const string &s);
+            ~Repl();
+        private:
+            Parser parser;
     };
 
 
