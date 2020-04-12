@@ -3,14 +3,19 @@
 
 namespace lisp{
 
+    /***************** Number.class *****************/
     Number::Number(const string token){
         this->value = token;
     }
 
+
+    /***************** Symbol.class *****************/
     Symbol::Symbol(const string token){
         this->value = token;
     }
 
+
+    /***************** Exp.class *****************/
     string Exp::toString(const size_t lvl){
         string s = "";
 
@@ -37,6 +42,8 @@ namespace lisp{
         this->children.clear();
     }
 
+
+    /***************** List.class *****************/
     void List::add(const Exp child){
         this->children.push_back(child);
     }

@@ -42,11 +42,6 @@ namespace lisp{
         private:
     };
 
-    class Env{
-        public:
-        private:
-    };
-
 }
 
 #endif
