@@ -1,3 +1,4 @@
+#include <string>
 #include "lisp.hpp"
 
 namespace lisp{
@@ -9,6 +10,12 @@ namespace lisp{
 
     Procedure::Procedure(int (*f)(const int x, const int y)){
         this->f = f;
+    }
+
+    int Procedure::invoke(const string xs, const string ys){
+        int x = std::stoi(xs);
+        int y = std::stoi(ys);
+        return invoke(x, y);
     }
 
     int Procedure::invoke(const int x, const int y){

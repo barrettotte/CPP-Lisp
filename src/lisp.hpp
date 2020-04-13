@@ -30,13 +30,14 @@ namespace lisp{
     class Repl{
         public:
             Repl();
-            void initEnv();
+            Env getEnv();
             Exp read(const string &s);
             Exp eval(Exp exp, Env &env);
             string print(Exp exp);
             string rep(const string &s, Env &env);
-            ~Repl();
         private:
+            void initEnv();
+            Exp evalAst(Exp &exp, Env &env);
             Parser parser;
             Env env;
     };

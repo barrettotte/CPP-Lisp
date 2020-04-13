@@ -18,6 +18,7 @@ namespace lisp{
             Procedure();
             Procedure(int (*f)(const int x, const int y));
             int invoke(const int x, const int y);
+            int invoke(const string xs, const string ys);
         private:
             int (*f)(const int x, const int y);
     };

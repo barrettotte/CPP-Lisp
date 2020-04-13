@@ -1,3 +1,4 @@
+#include <iostream>
 #include "lisp.hpp"
 
 using lisp::Env;
@@ -9,42 +10,31 @@ using std::cout;
 using std::endl;
 
 
+/* Deferrable:
+    - reader - string, nil, true, false
+    - macros
+    - Exp types: keyword, vector, hashmap
+    - comment support
+*/
+
 int main(){
-    // Repl *repl = new Repl();
-    // string line = "";
+    Repl repl;
+    string line = "";
+    Env env = repl.getEnv();
 
-    // cout << "========== CPP-Lisp ==========\n";
-    // cout << "       (CTRL+D to exit)\n> ";
+    cout << "========== CPP-Lisp ==========\n";
+    cout << "       (CTRL+D to exit)\n> ";
 
-    // while(getline(cin, line)){
-    //     cout << repl->rep(line) << "> ";
-    // }
-    // cout << endl;
+    while(getline(std::cin, line)){
+        cout << repl.rep(line, env) << "\n> ";
+    }
+    cout << endl;
 
-
-    // Test function pointers:
-    Env env;
-
-    Procedure pAdd(&lisp::add);
-    Procedure pSub(&lisp::sub);
-    Procedure pMul(&lisp::mul);
-    Procedure pDiv(&lisp::div);
-
-    EnvSymbol symAdd("+", pAdd);
-    EnvSymbol symSub("-", pSub);
-    EnvSymbol symMul("*", pMul);
-    EnvSymbol symDiv("/", pDiv);
-
-    env.update("+", symAdd);
-    env.update("-", symSub);
-    env.update("*", symMul);
-    env.update("/", symDiv);
-    
+    // Test function pointers:    
     cout << "1 + 2 = " << env.get("+").getProcedure().invoke(1,2) << endl;
     cout << "1 - 2 = " << env.get("-").getProcedure().invoke(1,2) << endl;
     cout << "1 * 2 = " << env.get("*").getProcedure().invoke(1,2) << endl;
     cout << "1 / 2 = " << env.get("/").getProcedure().invoke(1,2) << endl;
-    
     env.printEnv();
 
     return 0;
