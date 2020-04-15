@@ -39,7 +39,7 @@ namespace lisp{
                 s += this->value + "\n";
             }
         } else{
-            s += "[";
+            s += "(";
             if(this->children.size() > 0){
                 s += "\n";
                 for(size_t i = 0; i < this->children.size(); i++){
@@ -52,7 +52,7 @@ namespace lisp{
                     s += "  ";
                 }
             }
-            s += "]\n";   
+            s += ")\n";   
         }
         return s;
     }

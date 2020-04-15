@@ -66,7 +66,7 @@ namespace lisp{
             case TInt:       return std::to_string(this->v_i);
             case TDouble:    return std::to_string(this->v_d);
             case TBool:      return std::to_string(this->v_b);
-            default:         return "?";
+            case TVoid:      return "void";
         }
     }
 

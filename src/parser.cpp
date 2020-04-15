@@ -8,6 +8,7 @@ namespace lisp{
     vector<string> Parser::tokenize(const string &in){
         string s = std::regex_replace(in, std::regex("\\("), " ( ");
         s = std::regex_replace(s, std::regex("\\)"), " ) ");
+        s = s.substr(0, s.find(";")); // get everything before comment
 
         std::istringstream iss(s);
         vector<string> tokens(
@@ -19,6 +20,9 @@ namespace lisp{
 
     // read an expression from a string
     Exp Parser::parse(const string &pgm){
+        if(std::all_of(pgm.begin(), pgm.end() ,isspace)){
+            return Exp();
+        }
         vector<string> tokens(tokenize(pgm));
         return readTokens(tokens);
     }
@@ -26,11 +30,9 @@ namespace lisp{
     // read expression from list of tokens
     Exp Parser::readTokens(vector<string> &tokens){
         if(tokens.size() == 0){
-            std::cerr << "Unexpected EOF.\n";
-            exit(1);
+            return Exp();
         }
-
-        string token(tokens.at(0));
+        string token(tokens[0]);
         tokens.erase(tokens.begin());
 
         if(token == "("){

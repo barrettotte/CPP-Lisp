@@ -1,9 +1,8 @@
+#include <fstream>
 #include <iostream>
 #include "lisp.hpp"
 
 using lisp::Env;
-using lisp::EnvSymbol;
-using lisp::Procedure;
 using lisp::Repl;
 
 using std::cout;
@@ -17,24 +16,29 @@ using std::endl;
     - comment support
 */
 
-int main(){
+int main(int argc, char **argv){
     Repl repl;
-    string line = "";
     Env env = repl.getEnv();
+    string line = "";
 
-    cout << "========== CPP-Lisp ==========\n";
-    cout << "       (CTRL+D to exit)\n> ";
-
-    while(getline(std::cin, line)){
-        cout << repl.rep(line, env) << "\n> ";
+    if(argc == 2){
+        cout << "Loading file " << argv[1] << endl;
+        std::ifstream src(argv[1]);
+        while(getline(src, line)){
+            cout << repl.rep(line, env);
+        }
+        src.close();
+    } else if(argc == 1){
+        cout << "========== CPP-Lisp ==========\n" << "      (CTRL+D to exit)\n> ";
+        while(getline(std::cin, line)){
+            cout << repl.rep(line, env) << "\n> ";
+        }
+    } else{
+        cout << "Usage: lisp [filename]";
+        return 1;
     }
+    
     cout << endl;
-
-    // Test function pointers:    
-    cout << "1 + 2 = " << env.get("+").getProcedure().invoke(1,2) << endl;
-    cout << "1 - 2 = " << env.get("-").getProcedure().invoke(1,2) << endl;
-    cout << "1 * 2 = " << env.get("*").getProcedure().invoke(1,2) << endl;
-    cout << "1 / 2 = " << env.get("/").getProcedure().invoke(1,2) << endl;
     env.printEnv();
 
     return 0;
