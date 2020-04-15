@@ -20,18 +20,19 @@ namespace lisp{
 
     // read an expression from a string
     Exp Parser::parse(const string &pgm){
-        if(std::all_of(pgm.begin(), pgm.end() ,isspace)){
-            return Exp();
+        if(std::all_of(pgm.begin(), pgm.end(), isspace)){
+            return Nil();
         }
+
         vector<string> tokens(tokenize(pgm));
+        if(tokens.size() == 0){
+            return Nil();
+        }
         return readTokens(tokens);
     }
 
     // read expression from list of tokens
     Exp Parser::readTokens(vector<string> &tokens){
-        if(tokens.size() == 0){
-            return Exp();
-        }
         string token(tokens[0]);
         tokens.erase(tokens.begin());
 

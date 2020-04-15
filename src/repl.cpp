@@ -4,6 +4,7 @@ namespace lisp{
 
     Repl::Repl(){
         this->parser = Parser();
+        this->env.init(nullptr);
         initEnv();
     }
 
@@ -18,15 +19,36 @@ namespace lisp{
     Exp Repl::eval(Exp exp, Env &env){
         if(exp.getType() != LList){
             return evalAst(exp, env);
-        }
-        if(exp.getChildrenSize() == 0){
+        } else if(exp.getChildrenSize() == 0){
             return exp;
+        }
+
+        if(exp.getChild(0).getValue() == "def!"){
+            string identifier = exp.getChild(1).getValue();
+            Exp def = eval(exp.getChild(2), env);
+            EnvSymbol sym(identifier, def.getValue());
+            env.set(identifier, sym);
+            return def;
+        }
+        else if(exp.getChild(0).getValue() == "let*"){
+            vector<Exp> children = exp.getChild(1).getChildren();
+            Env letEnv;
+            letEnv.init(&env);
+            for(size_t i = 0; i < children.size(); i+=2){
+                string identifier = children[i].getValue();
+                Exp val = eval(exp.getChild(1).getChildren()[i+1], letEnv);
+
+                EnvSymbol sym(identifier, val.getValue());
+                letEnv.set(identifier, sym);
+            }
+            return eval(exp.getChild(2), letEnv);
         }
 
         Exp evaluated = evalAst(exp, env);
         EnvSymbol sym = env.get(exp.getChild(0).getValue());
         Procedure p = sym.getProcedure();
-        Number result(std::to_string(p.invoke(evaluated.getChild(1).getValue(), evaluated.getChild(2).getValue())));
+        Number result(std::to_string(
+            p.invoke(evaluated.getChild(1).getValue(), evaluated.getChild(2).getValue())));
 
         return result;
     }
@@ -66,10 +88,10 @@ namespace lisp{
         EnvSymbol symMul("*", pMul);
         EnvSymbol symDiv("/", pDiv);
 
-        env.update("+", symAdd);
-        env.update("-", symSub);
-        env.update("*", symMul);
-        env.update("/", symDiv);
+        env.set("+", symAdd);
+        env.set("-", symSub);
+        env.set("*", symMul);
+        env.set("/", symDiv);
     }
 
 }

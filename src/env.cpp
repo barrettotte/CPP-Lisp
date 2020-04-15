@@ -66,7 +66,7 @@ namespace lisp{
             case TInt:       return std::to_string(this->v_i);
             case TDouble:    return std::to_string(this->v_d);
             case TBool:      return std::to_string(this->v_b);
-            case TVoid:      return "void";
+            default:         return "void";
         }
     }
 
@@ -100,30 +100,51 @@ namespace lisp{
 
 
     /******************* Env.class *********************/
-
-    EnvSymbol Env::get(const string k){
-        return this->env[k];
+    
+    // workaround annoying default copy constructor...
+    void Env::init(Env *outer){
+        this->outer = outer;
     }
 
-    void Env::update(const string k, const EnvSymbol &v){
-        this->env[k] = v;
+    EnvSymbol Env::get(const string k){
+        Env *env = this->find(k);
+        if(env){
+            return env->data[k];
+        }
+        std::cerr << "Could not find symbol '" + k + "'\n";
+        exit(1);
+    }
+
+    // find symbol in current env, or search recursively in outer environments
+    Env* Env::find(const string k){
+        std::map<string,EnvSymbol>::iterator res = this->data.find(k);
+        if(res != this->data.end()){
+            return this;    
+        } else if(this->outer != nullptr){
+            return this->outer->find(k);
+        } 
+        return nullptr;
+    }
+
+    void Env::set(const string k, const EnvSymbol &v){
+        this->data[k] = v;
     }
 
     void Env::remove(const string k){
-        this->env.erase(k); // returns a size_t == keys erased
+        this->data.erase(k); // returns a size_t == keys erased
     }
 
     void Env::printEnv(){
         std::map<string, EnvSymbol>::iterator itr;
         std::cout << "env {" << std::endl;
-        for(itr = this->env.begin(); itr != this->env.end(); ++itr){
+        for(itr = this->data.begin(); itr != this->data.end(); ++itr){
             std::cout << "  '" << itr->first << "': " << itr->second.asString() << std::endl;
         }
         std::cout << "}" << std::endl;
     }
 
     Env::~Env(){
-        this->env.clear();
+        this->data.clear();
     }
 
 }

@@ -58,15 +58,20 @@ namespace lisp{
             bool v_b;
     };
 
+    class Env;
+
     class Env{
         public:
+            void init(Env *outer);
             EnvSymbol get(const string k);
-            void update(const string k, const EnvSymbol &v);
+            void set(const string k, const EnvSymbol &v);
+            Env *find(const string k);
             void remove(const string k);
             void printEnv();
             ~Env();
         private:
-            std::map<string, EnvSymbol> env;
+            std::map<string, EnvSymbol> data;
+            Env *outer;
     };
      
 }

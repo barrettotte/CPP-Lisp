@@ -10,7 +10,7 @@ using std::vector;
 namespace lisp{
 
     enum ExpType{
-        LSymbol, LNumber, LList
+        LSymbol, LNumber, LList, LNil
     };
 
     class List;
@@ -54,6 +54,11 @@ namespace lisp{
     class Number: public Atom{
         public:
             Number(const string token): Atom(token){this->type = LNumber;};
+    };
+
+    class Nil: public Atom{
+        public:
+            Nil(): Atom("nil"){this->type = LNil;}
     };
 
 }

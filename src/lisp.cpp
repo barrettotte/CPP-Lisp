@@ -25,6 +25,7 @@ int main(int argc, char **argv){
         cout << "Loading file " << argv[1] << endl;
         std::ifstream src(argv[1]);
         while(getline(src, line)){
+            //cout << "reading '" << line << "'" << endl;
             cout << repl.rep(line, env);
         }
         src.close();
