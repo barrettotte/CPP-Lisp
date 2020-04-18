@@ -23,6 +23,9 @@ namespace lisp{
             return exp;
         }
 
+        // TODO: separate into smaller functions for readability
+        //  switch jump table on exp.children[0].value
+
         if(exp.getChild(0).getValue() == "def!"){
             string identifier = exp.getChild(1).getValue();
             Exp def = eval(exp.getChild(2), env);
@@ -42,6 +45,24 @@ namespace lisp{
                 letEnv.set(identifier, sym);
             }
             return eval(exp.getChild(2), letEnv);
+        } 
+        else if(exp.getChild(0).getValue() == "do"){
+            List exps; // exp.children[1:]
+            for(size_t i = 1; i < exp.getChildrenSize(); i++){
+                exps.add(exp.getChild(i));
+            }
+            evalAst(exps, env);
+            return exps.getChild(exp.getChildrenSize()-1);
+        } 
+        else if(exp.getChild(0).getValue() == "if"){
+            Exp cond = eval(exp.getChild(1), env);
+            if(cond.getValue() == "nil" || cond.getValue() == "false"){
+                if(exp.getChildrenSize() > 3){
+                    return eval(exp.getChild(3), env);
+                }
+                return Nil();
+            }
+            return eval(exp.getChild(2), env);
         }
 
         Exp evaluated = evalAst(exp, env);
@@ -58,7 +79,8 @@ namespace lisp{
     }
 
     string Repl::rep(const string &s, Env &env){
-        return print(eval(read(s), env));
+        Exp exp = read(s);
+        return (exp.getType() == LIgnore) ? "" : print(eval(exp, env));
     }
 
     Exp Repl::evalAst(Exp &exp, Env &env){

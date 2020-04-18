@@ -40,7 +40,7 @@ int main(int argc, char **argv){
     }
     
     cout << endl;
-    env.printEnv();
+    //env.printEnv();
 
     return 0;
 }

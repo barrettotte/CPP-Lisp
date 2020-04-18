@@ -21,12 +21,12 @@ namespace lisp{
     // read an expression from a string
     Exp Parser::parse(const string &pgm){
         if(std::all_of(pgm.begin(), pgm.end(), isspace)){
-            return Nil();
+            return Ignore();
         }
 
         vector<string> tokens(tokenize(pgm));
         if(tokens.size() == 0){
-            return Nil();
+            return Ignore();
         }
         return readTokens(tokens);
     }
@@ -56,6 +56,10 @@ namespace lisp{
     Atom Parser::makeAtom(const string token){
         if(isNumber(token)){
             return Number(token);
+        } else if(token == "nil"){
+            return Nil();
+        } else if(token == "true" || token == "false"){
+            return Bool(token);
         }
         return Symbol(token);
     }

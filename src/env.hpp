@@ -4,8 +4,10 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <vector>
 
 using std::string;
+using std::vector;
 
 namespace lisp{
 
@@ -63,6 +65,7 @@ namespace lisp{
     class Env{
         public:
             void init(Env *outer);
+            void init(Env *outer, vector<string> binds, vector<EnvSymbol> exprs);
             EnvSymbol get(const string k);
             void set(const string k, const EnvSymbol &v);
             Env *find(const string k);

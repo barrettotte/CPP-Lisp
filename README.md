@@ -1,7 +1,6 @@
 # CPP-Lisp
 
 Screwing around with C++ to learn more about lisp, refresh on a bit of C++, and make a basic lisp interpreter.
-Specifically, this is a Scheme interpreter (a minimalist dialect of lisp).
 
 I used [Make a Lisp(MAL)](https://github.com/kanaka/mal) as a general guide, but somewhat went off course in implementation.
 
@@ -18,17 +17,6 @@ I decided it would be a lot more fun to do this off of "pure instinct" instead.
 What it produced was a janky object hierarchy and some stuff that should be limited to C.
 
 One day I do hope to come back and strengthen up my C++ OOP...
-
-
-
-## Notes on Scheme
-* Scheme programs only contain expressions.
-* Atoms - numbers/symbols -> they cannot be broken into smaller pieces.
-* Everything else is a list expression. ```'(' expression* ')'```
-  * list[0] is keyword, special form. ```(if ...)```
-  * list[0] is non-keyword, function call. ```(fn ...)```
-* symbols ending in '!' - function that mutates something else
-
 
 
 ## References

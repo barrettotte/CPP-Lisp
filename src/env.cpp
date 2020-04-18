@@ -61,7 +61,7 @@ namespace lisp{
 
     string EnvSymbol::asString(){
         switch(this->type){
-            case TProcedure: return this->identifier + " x y";                
+            case TProcedure: return "func " + this->identifier + " x y";                
             case TString:    return this->v_s;                
             case TInt:       return std::to_string(this->v_i);
             case TDouble:    return std::to_string(this->v_d);
@@ -104,6 +104,15 @@ namespace lisp{
     // workaround annoying default copy constructor...
     void Env::init(Env *outer){
         this->outer = outer;
+    }
+
+    void Env::init(Env *outer, vector<string> binds, vector<EnvSymbol> exprs){
+        this->outer = outer;
+        
+        // TODO: might not need binds + exprs, just binds...?
+        for(size_t i = 0; i < binds.size(); i++){
+            this->data[binds[i]] = exprs[i];
+        }
     }
 
     EnvSymbol Env::get(const string k){

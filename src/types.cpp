@@ -34,12 +34,9 @@ namespace lisp{
 
     string Exp::toString(const size_t lvl){
         string s = "";
-        if(this->type == LNil){
-            return s;
-        } else if(this->type == LSymbol || this->type == LNumber){
-            if(this->value.length() > 0){
-                s += this->value + "\n";
-            }
+        if(this->value.length() > 0 
+         && (this->type == LSymbol || this->type == LNumber || this->type == LNil || this->type == LBool)){
+            s += this->value + "\n";
         } else{
             s += "(";
             if(this->children.size() > 0){
